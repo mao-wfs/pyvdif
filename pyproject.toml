@@ -5,15 +5,18 @@ description = "The Python3 package for VDIF (VLBI Data Interchange Format)"
 readme = "README.md"
 authors = ["scizorman <tueda1207@gmail.com>"]
 repository = "https://github.com/scizorman/pyvdif"
+license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.7"
 
 [tool.poetry.dev-dependencies]
 black = "^19.3b0"
+codecov = "^2.0"
 flake8 = "^3.7"
 mypy = "^0.711.0"
 pytest = "^3.0"
+pytest-cov = "^2.7"
 
 [build-system]
 requires = ["poetry>=0.12"]
