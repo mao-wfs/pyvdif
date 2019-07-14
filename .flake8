@@ -1,0 +1,12 @@
+[flake8]
+exclude =
+    .git,
+    .tox,
+    .venv,
+    build,
+    dist,
+    docs,
+    **/__pycache__/*,
+    **/__init__.py
+max-complexity = 10
+max-line-length = 88
