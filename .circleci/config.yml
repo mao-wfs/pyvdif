@@ -17,7 +17,7 @@ commands:
           name: Save dependencies
           key: deps-{{ checksum "poetry.lock" }}
           paths:
-            - ~/project/.venv
+            - ~/.cache/pypoetry/virtualenvs
 
 jobs:
   lint_and_test:
