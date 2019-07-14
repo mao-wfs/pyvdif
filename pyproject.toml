@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pyvdif"
+name = "PyVDIF"
 version = "0.1.0"
 description = "The Python3 package for VDIF (VLBI Data Interchange Format)"
 readme = "README.md"
