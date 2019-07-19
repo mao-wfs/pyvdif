@@ -3,14 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to PyVDIF's documentation!
+Welcome to PyVDIF
 ==================================
+
+Welcome to PyVDIF's documentation.
+
+User's Guide
+------------
+
+This guide is intended as an introductory overview of PyVDIF
+and explains how to install and make use of the most important features.
+For detailed reference documentation of the functions and classes
+contained in the package, see the :ref:`reference`.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
-
+   vdif
+   installation
+   examples
+   reference
 
 Indices and tables
 ==================
