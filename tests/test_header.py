@@ -18,7 +18,12 @@ class TestMakeParser:
 
     @pytest.mark.parametrize(
         "word_index, bit_index, bit_length, expected",
-        [(0, 0, 30, 14363767), (1, 24, 6, 28), (3, 31, 1, 0)],
+        [
+            (0, 0, 30, 14363767),
+            (1, 24, 6, 28),
+            (3, 31, 1, 0),
+            (6, 0, 64, 17438805835353423872),
+        ],
     )
     def test_success(
         self, word_index: int, bit_index: int, bit_length: int, expected: int
@@ -27,7 +32,8 @@ class TestMakeParser:
         assert parser(self.words) == expected
 
     @pytest.mark.parametrize(
-        "word_index, bit_index, bit_length", [(0, 0, 33), (1, 24, 16), (3, 31, 2)]
+        "word_index, bit_index, bit_length",
+        [(0, 0, 33), (1, 24, 16), (3, 31, 2), (6, 3, 64)],
     )
     def test_failure(self, word_index: int, bit_index: int, bit_length: int):
         with pytest.raises(ValueError):
