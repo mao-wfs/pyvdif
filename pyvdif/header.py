@@ -25,9 +25,9 @@ def make_parser(
 
     Raises:
         ValueError:
-          - If bit_index is not equal to 0 when bit_length is 64.
-          - If the sum of bit_index and bit_length
-            is less or equal to 0 or greater than 32.
+            - If bit_index is not equal to 0 when bit_length is 64.
+            - If the sum of bit_index and bit_length
+              is less or equal to 0 or greater than 32.
     """
     if bit_length == 64:
         if bit_index != 0:
