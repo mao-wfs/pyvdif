@@ -177,4 +177,4 @@ class VDIFHeader:
         Return:
             If True, it is valid.
         """
-        return bool(self._header_values["invalid_flag"])
+        return not bool(self._header_values["invalid_flag"])
