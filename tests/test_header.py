@@ -1,4 +1,3 @@
-# coding: utf-8
 import pytest
 
 from pyvdif import make_header_parser
