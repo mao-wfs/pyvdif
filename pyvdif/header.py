@@ -1,7 +1,7 @@
 from typing import Callable, Dict, Sequence, Union
 
 
-def make_parser(
+def make_header_parser(
     word_index: int, bit_index: int, bit_length: int
 ) -> Callable[[Sequence[int]], int]:
     """Construct a function that converts specific bits from a header.
@@ -97,7 +97,7 @@ class VDIFHeader:
         self.words = words
 
         for key, val in self._bit_specs.items():
-            self._header_values[key] = make_parser(*val)(words)
+            self._header_values[key] = make_header_parser(*val)(words)
 
     @property
     def bps(self) -> int:

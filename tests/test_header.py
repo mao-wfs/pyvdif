@@ -1,7 +1,7 @@
 # coding: utf-8
 import pytest
 
-from pyvdif import make_parser
+from pyvdif import make_header_parser
 
 
 class TestMakeParser:
@@ -28,7 +28,7 @@ class TestMakeParser:
     def test_success(
         self, word_index: int, bit_index: int, bit_length: int, expected: int
     ):
-        parser = make_parser(word_index, bit_index, bit_length)
+        parser = make_header_parser(word_index, bit_index, bit_length)
         assert parser(self.words) == expected
 
     @pytest.mark.parametrize(
@@ -37,4 +37,4 @@ class TestMakeParser:
     )
     def test_failure(self, word_index: int, bit_index: int, bit_length: int):
         with pytest.raises(ValueError):
-            _ = make_parser(word_index, bit_index, bit_length)
+            _ = make_header_parser(word_index, bit_index, bit_length)

@@ -3,6 +3,6 @@
 
 This module helps you interpret the VDIF.
 """
-from .header import make_parser
+from .header import make_header_parser
 
 __version__ = "0.1.0"
