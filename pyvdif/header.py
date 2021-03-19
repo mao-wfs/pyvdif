@@ -101,32 +101,27 @@ class VDIFHeader:
 
     @property
     def bps(self) -> int:
-        """bits per elementary sample
-        """
+        """bits per elementary sample"""
         return self._header_values["bits_per_sample"] + 1
 
     @property
     def frame_length(self) -> int:
-        """length of the frame
-        """
+        """length of the frame"""
         return self._header_values["frame_length"] * 8
 
     @property
     def payload_length(self) -> int:
-        """length of the payload
-        """
+        """length of the payload"""
         return self.frame_length - len(self.words) * 4
 
     @property
     def num_ch(self) -> int:
-        """number of channels in the frame
-        """
+        """number of channels in the frame"""
         return 2 ** self._header_values["log2_num_ch"]
 
     @property
     def num_sample(self) -> int:
-        """number of samples in the frame
-        """
+        """number of samples in the frame"""
         values_per_data_word = 32 // self.bps // (2 if self.is_complex() else 1)
         return self.payload_length // 4 * values_per_data_word // self.num_ch
 
@@ -145,14 +140,12 @@ class VDIFHeader:
 
     @property
     def thread_id(self) -> int:
-        """thread ID
-        """
+        """thread ID"""
         return self._header_values["thread_id"]
 
     @property
     def version(self) -> int:
-        """VDIF version
-        """
+        """VDIF version"""
         return self._header_values["version"]
 
     def is_legacy(self) -> bool:
