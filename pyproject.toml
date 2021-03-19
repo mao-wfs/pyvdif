@@ -24,11 +24,10 @@ classifiers = [
 python = "^3.7"
 
 [tool.poetry.dev-dependencies]
-black = "^19.10b"
-codecov = "^2.0"
-flake8 = "^3.7"
-mypy = "^0.760"
-pytest-cov = "^2.8"
+black = "^20.8b"
+flake8 = "^3.9"
+ipython = "^7.21"
+pytest = "^6.2"
 
 [build-system]
 requires = ["poetry>=1.0"]
