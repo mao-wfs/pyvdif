@@ -31,7 +31,7 @@ def get_spectra(path: Path) -> np.ndarray:
         np.empty([n_units, n_chans], dtype=complex),
         dims=["t", "ch"],
         coords={
-            "t": ("t", np.empty(n_units, dtype="datetime64[ns]")),
+            "time": ("t", np.empty(n_units, dtype="datetime64[ns]")),
             "frame_index": ("t", np.empty(n_units, dtype=int)),
         },
     )
@@ -42,8 +42,8 @@ def get_spectra(path: Path) -> np.ndarray:
             time, frame_index = parse_vdif_head(vdif_head)
             read_corr_head(f)
             corr_data = read_corr_data(f)
-            spectra[i] = parse_corr_data(corr_data)
-            spectra.t[i] = time
+            spectra.data[i] = parse_corr_data(corr_data)
+            spectra.time[i] = time
             spectra.frame_index[i] = frame_index
         return spectra
 
