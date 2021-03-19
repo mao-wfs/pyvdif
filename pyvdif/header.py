@@ -99,6 +99,10 @@ class VDIFHeader:
         for key, val in self._bit_specs.items():
             self._header_values[key] = make_header_parser(*val)(words)
 
+    def __getattr__(self, key: str) -> int:
+        """Access _header_values as attributes."""
+        return self._header_values[key]
+
     @property
     def bps(self) -> int:
         """bits per elementary sample"""
