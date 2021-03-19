@@ -1,4 +1,5 @@
 from typing import Callable, Dict, Sequence, Union
+from datetime import datetime, timedelta
 
 
 def make_header_parser(
@@ -102,6 +103,17 @@ class VDIFHeader:
     def __getattr__(self, key: str) -> int:
         """Access _header_values as attributes."""
         return self._header_values[key]
+
+    @property
+    def datetime(self) -> datetime:
+        """datetime from reference epoch"""
+        div, mod = divmod(self.ref_epoch, 2)
+        if mod == 0:
+            ref_epoch = datetime(year=2000 + div, month=1, day=1)
+        else:
+            ref_epoch = datetime(year=2000 + div, month=7, day=1)
+
+        return timedelta(seconds=self.seconds) + ref_epoch
 
     @property
     def bps(self) -> int:
