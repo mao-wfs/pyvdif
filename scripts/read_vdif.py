@@ -6,6 +6,7 @@ from typing import Callable
 
 # dependent packages
 import numpy as np
+import xarray as xr
 from pyvdif.header import VDIFHeader
 
 
@@ -24,9 +25,16 @@ N_BYTES_PER_SCAN: int = 1312 * 64
 # main features
 def get_spectra(path: Path) -> np.ndarray:
     n_units = path.stat().st_size // N_BYTES_PER_UNIT
-    n_integ = n_units // N_UNITS_PER_SCAN
+    # n_integ = n_units // N_UNITS_PER_SCAN
     n_chans = N_ROWS_CORR_DATA // 2
-    spectra = np.empty([n_units, n_chans], dtype=complex)
+    spectra = xr.DataArray(
+        np.empty([n_units, n_chans], dtype=complex),
+        dims=["t", "ch"],
+        coords={
+            "t": ("t", np.empty(n_units, dtype="datetime64[ns]")),
+            "frame_index": ("t", np.empty(n_units, dtype=int)),
+        },
+    )
 
     with open(path, "rb") as f:
         for i in range(n_units):
@@ -35,8 +43,11 @@ def get_spectra(path: Path) -> np.ndarray:
             read_corr_head(f)
             corr_data = read_corr_data(f)
             spectra[i] = parse_corr_data(corr_data)
+            spectra.t[i] = time
+            spectra.frame_index[i] = frame_index
+        return spectra
 
-    return spectra.reshape([n_integ, N_UNITS_PER_SCAN * n_chans])
+    # return spectra.reshape([n_integ, N_UNITS_PER_SCAN * n_chans])
 
 
 # struct readers
