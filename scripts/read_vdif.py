@@ -25,15 +25,12 @@ N_BYTES_PER_SCAN: int = 1312 * 64
 # main features
 def get_spectra(path: Path) -> np.ndarray:
     n_units = path.stat().st_size // N_BYTES_PER_UNIT
-    # n_integ = n_units // N_UNITS_PER_SCAN
+    n_integ = n_units // N_UNITS_PER_SCAN
     n_chans = N_ROWS_CORR_DATA // 2
-    spectra = xr.DataArray(
-        np.empty([n_units, n_chans], dtype=complex),
-        dims=["t", "ch"],
-        coords={
-            "time": ("t", np.empty(n_units, dtype="datetime64[ns]")),
-            "frame_index": ("t", np.empty(n_units, dtype=int)),
-        },
+    corr_dataset = np.empty([n_units, n_chans], dtype=complex)
+    time_dataset = np.empty(
+        n_units,
+        dtype=[("time_series", "datetime64[ns]"), ("time_offset", "timedelta64[ms]")],
     )
 
     with open(path, "rb") as f:
@@ -42,12 +39,19 @@ def get_spectra(path: Path) -> np.ndarray:
             time, frame_index = parse_vdif_head(vdif_head)
             read_corr_head(f)
             corr_data = read_corr_data(f)
-            spectra.data[i] = parse_corr_data(corr_data)
-            spectra.time[i] = time
-            spectra.frame_index[i] = frame_index
-        return spectra
+            corr_dataset[i] = parse_corr_data(corr_data)
+            time_dataset[i] = (time, frame_index)
 
-    # return spectra.reshape([n_integ, N_UNITS_PER_SCAN * n_chans])
+    time_header = (
+        time_dataset["time_series"] + (time_dataset["time_offset"] // 64 * 10)
+    )[::N_UNITS_PER_SCAN]
+    spectra_data = corr_dataset.reshape([int(n_integ), int(N_UNITS_PER_SCAN * n_chans)])
+    spectra = xr.DataArray(
+        spectra_data,
+        dims=["t", "ch"],
+        coords={"time": ("t", time_header)},
+    )
+    return spectra
 
 
 # struct readers
